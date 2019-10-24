@@ -2,6 +2,10 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.41'
 }
 
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+
 group 'kotlin'
 version '1.0-SNAPSHOT'
 
@@ -15,9 +19,24 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:2.3.0"
 }
 
+jar {
+    manifest {
+        attributes "Main-Class": "sample.service.StackOverflowChallenge"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin/'
+    test.java.srcDirs += 'src/test/kotlin/'
 }

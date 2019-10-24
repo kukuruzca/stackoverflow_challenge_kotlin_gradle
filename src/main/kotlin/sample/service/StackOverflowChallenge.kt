@@ -36,7 +36,7 @@ object StackOverflowChallenge {
         if (tags == null)
             throw NullPointerException("tags is null")
 
-        var contains = tags.filter {  it.equals("java", true) || it.equals("c#", true) || it.equals(".net", true) || it.equals("docker", true)}.count() >0
+        var contains = tags.filter {  it.equals("java", true) || it.equals("c#", true) || it.equals(".net", true) || it.equals("docker", true)}.count() > 0
         return contains
     }
 
@@ -74,7 +74,22 @@ object StackOverflowChallenge {
         //create new filter on base of default
         //add new fields in filter
         val include = listOf("user.answer_count", "user.question_count")
-        val exclude = listOf<String>()
+        val exclude = listOf("accept_rate"
+            ,"age"
+            ,"badge_counts"
+            ,"badge_counts"
+            ,"creation_date"
+            ,"is_employee"
+            ,"last_access_date"
+            ,"last_modified_date"
+            ,"reputation_change_day"
+            ,"reputation_change_month"
+            ,"reputation_change_quarter"
+            ,"reputation_change_week"
+            ,"reputation_change_year"
+            ,"timed_penalty_date"
+            ,"user_type"
+            ,"website_url")
         val filter = stackExchange.createFilter(include, exclude, "default", false)
 
         //start from page 1

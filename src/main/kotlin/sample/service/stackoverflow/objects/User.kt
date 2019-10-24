@@ -2,7 +2,6 @@ package sample.service.stackoverflow.objects
 
 class User(
     val display_name: String,
-    val age: Int,
     val location: String,
     val reputation: Int,
     val user_id: Int,
