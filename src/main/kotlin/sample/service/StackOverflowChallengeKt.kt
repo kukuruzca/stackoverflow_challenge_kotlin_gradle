@@ -5,7 +5,7 @@ import sample.service.stackoverflow.objects.User
 import java.io.IOException
 import java.util.*
 
-object StackOverflowChallenge {
+object StackOverflowChallengeKt {
     fun printUser(user: User, userTags: List<String>) {
         val userName = user.display_name
         val userLocation = user.location
