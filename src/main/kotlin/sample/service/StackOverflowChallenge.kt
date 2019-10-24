@@ -1,7 +1,6 @@
 package sample.service
 
 
-
 import sample.service.stackoverflow.objects.User
 import java.io.IOException
 import java.util.*
@@ -37,14 +36,8 @@ object StackOverflowChallenge {
         if (tags == null)
             throw NullPointerException("tags is null")
 
-        //have at least one of the desired tags
-//        val p1 = { e -> e.equals("java", ignoreCase = true) }
-//        val p2 = { e -> e.equals("c#", ignoreCase = true) }
-//        val p3 = { e -> e.equals(".net", ignoreCase = true) }
-//        val p4 = { e -> e.equals("docker", ignoreCase = true) }
-//        return tags.stream().anyMatch(p1.or(p2).or(p3).or(p4))
-        //TODO:
-        return true;
+        var contains = tags.filter {  it.equals("java", true) || it.equals("c#", true) || it.equals(".net", true) || it.equals("docker", true)}.count() >0
+        return contains
     }
 
     fun isNullOrEmpty(str: String?): Boolean {
