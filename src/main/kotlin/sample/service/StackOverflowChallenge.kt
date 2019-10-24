@@ -62,11 +62,12 @@ object StackOverflowChallenge {
                 hasMore = response.has_more
             }
             page++
+            Thread.sleep(500)
         }
         return userTags
     }
 
-    @Throws(IOException::class, InterruptedException::class)
+    //@Throws(IOException::class, InterruptedException::class)
     @JvmStatic
     fun main(args: Array<String>) {
         //AppKey retrieved for my app to enlarge number of quota requests
@@ -74,6 +75,7 @@ object StackOverflowChallenge {
         //create new filter on base of default
         //add new fields in filter
         val include = listOf("user.answer_count", "user.question_count")
+        //exclude unused user fields
         val exclude = listOf("accept_rate"
             ,"age"
             ,"badge_counts"
@@ -90,6 +92,7 @@ object StackOverflowChallenge {
             ,"timed_penalty_date"
             ,"user_type"
             ,"website_url")
+
         val filter = stackExchange.createFilter(include, exclude, "default", false)
 
         //start from page 1
@@ -97,11 +100,13 @@ object StackOverflowChallenge {
         var hasMore = true
         //there is no sense to request users in multi threads, because StackExchange blocks ip address if there are to many requests per second from single ip address
         while (hasMore) {
+
             val commonWrapperObject = stackExchange.getUsers(page, 223, filter.filter)
             commonWrapperObject?.items?.stream()?.filter { x -> x.answer_count > 0 }?.filter { x ->
                 x?.location != null && (x.location.contains("Moldova", true) || x.location.contains("Romania", true))
             }?.forEach { x ->
                 //final filter by tags
+                //get user tags only for users that pass check with location and answer_count
                 try {
                     val userTags = getAllUserTags(x.user_id, stackExchange)
                     if (tagsFitsRequirements(userTags))
@@ -114,6 +119,7 @@ object StackOverflowChallenge {
                 hasMore = commonWrapperObject.has_more
             }
             page++
+
             //throttling sleep
             Thread.sleep(500)
         }

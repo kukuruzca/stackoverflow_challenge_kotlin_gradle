@@ -1,22 +1,14 @@
 
 buildscript {
-    // Serves as a global variable
     ext.kotlin_version = '1.3.41'
-    // Defines where we get our dependencies
     repositories {
         mavenCentral()
     }
     dependencies {
-        // Retrieves the Kotlin gradle plugin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
     }
 }
-//plugins {
-//    id 'org.jetbrains.kotlin.jvm' version '1.3.41'
-//}
 
-apply plugin: 'java'
 apply plugin: 'kotlin'
 
 group 'kotlin'
@@ -33,8 +25,9 @@ dependencies {
 }
 
 jar {
+
     manifest {
-        attributes "Main-Class": "sample.service.StackOverflowChallenge"
+        attributes 'Main-Class': 'sample.service.StackOverflowChallenge'
     }
 
     from {
@@ -43,6 +36,8 @@ jar {
         }
     }
 }
+
+
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"

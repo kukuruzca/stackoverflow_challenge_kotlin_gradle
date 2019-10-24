@@ -28,13 +28,15 @@ class StackExchangeService(private val appKey: String) {
     @Throws(IOException::class)
     fun getUsers(page: Int, reputationMinimum: Int, filterName: String): CommonWrapperObject<User>? {
         // Create a call instance for getting users.
+        //no order
+        //no max reputation
         val call = stackOverflowApi.getUsers(
-            null,
+            "reputation",
             reputationMinimum,
             null,
             null,
             SITE,
-            DEFAULT_PAGE_SIZE,
+            MAX_PAGE_SIZE,
             page,
             filterName,
             appKey
@@ -45,7 +47,7 @@ class StackExchangeService(private val appKey: String) {
 
     @Throws(IOException::class)
     fun getAllUserTags(userId: Int, page: Int): CommonWrapperObject<Tag>? {
-        return executeCallAndGetResponse(stackOverflowApi.getUserTags(userId, SITE, page, DEFAULT_PAGE_SIZE, appKey))
+        return executeCallAndGetResponse(stackOverflowApi.getUserTags(userId, SITE, page, MAX_PAGE_SIZE, appKey))
     }
 
     @Throws(IOException::class)
@@ -61,11 +63,9 @@ class StackExchangeService(private val appKey: String) {
         )
 
         if (response != null) {
-            if (response.items != null) {
                 val filterFound = response.items.stream().findAny()
                 if (filterFound.isPresent)
                     return filterFound.get()
-            }
         }
         throw RuntimeException("Unable to create filter")
     }
@@ -87,7 +87,7 @@ class StackExchangeService(private val appKey: String) {
     companion object {
         private const val API_URL = "https://api.stackexchange.com"
         private const val SITE = "stackoverflow"
-        private const val DEFAULT_PAGE_SIZE = 100
+        private const val MAX_PAGE_SIZE = 100
     }
 
 
