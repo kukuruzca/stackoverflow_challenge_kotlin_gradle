@@ -62,7 +62,8 @@ object StackOverflowChallengeKt {
                 hasMore = response.has_more
             }
             page++
-            Thread.sleep(500)
+            //throttling sleep
+            Thread.sleep(200)
         }
         return userTags
     }
@@ -121,7 +122,7 @@ object StackOverflowChallengeKt {
             page++
 
             //throttling sleep
-            Thread.sleep(500)
+            Thread.sleep(200)
         }
     }
 

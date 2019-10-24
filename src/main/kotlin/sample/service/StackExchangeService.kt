@@ -34,7 +34,7 @@ class StackExchangeService(private val appKey: String) {
             "reputation",
             reputationMinimum,
             null,
-            null,
+            "asc",
             SITE,
             MAX_PAGE_SIZE,
             page,
